@@ -1,0 +1,19 @@
+<BenchTestStkciVecowPCMCard>
+	<main_thread_period>50</main_thread_period>
+	<feedback_thread_period>10</feedback_thread_period>
+
+	<pcan_port>/dev/pcan32</pcan_port>	
+
+	<Debug> <!--Defined debug folder must be in the system -->
+		<enabled>0</enabled>
+		<log_folder>/home/pallet/Documents/datalog/pcanlog</log_folder>
+	</Debug>
+	
+	<senderid_publisher>DBW</senderid_publisher>
+	<senderid_dbwcmd>TeleOps</senderid_dbwcmd>
+	<senderid_basecmd>PalletBehavior</senderid_basecmd>		
+	
+</BenchTestStkciVecowPCMCard>
+
+
+

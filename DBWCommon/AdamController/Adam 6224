@@ -1,0 +1,68 @@
+ADAM-6217 8-ch Isolated Analog Input Module
+
+Address (0X)	Channel			Description		Attribute
+00001 		0			DI Value		Read
+00002 		1			DI Value		Read
+00003 		2			DI Value		Read
+00004 		3			DI Value		Read
+
+Address (4X) 	Channel			Description		Attribute
+40001 		0 			AO Value		R/W
+40002 		1 			AO Value		R/W
+40003 		2 			AO Value		R/W
+40004 		3 			AO Value		R/W
+
+40101 – 40102 	0 			AO Status		Read
+40103 – 40104 	1 			AO Status		Read
+40105 – 40106	2 			AO Status		Read
+40107 – 40108	3 			AO Status		Read
+
+40111 		0 			DI Event Status 	Read
+40112 		1 			DI Event Status 	Read 
+40113 		2 			DI Event Status 	Read 
+40114 		3 			DI Event Status 	Read
+
+40201 		0			Type Code		R/W
+40202 		1 			Type Code		R/W
+40203 		2 			Type Code		R/W
+40204 		3			Type Code		R/W
+ 
+40301 		All 			DI Value 		Read
+
+40411 		0			Safety Value		R/W
+40412 		1 			Safety Value		R/W
+40413 		2 			Safety Value		R/W
+40414 		3 			Safety Value		R/W
+
+40401		0 			Startup Value		R/W
+40402 		1 			Startup Value		R/W
+40403 		2 			Startup Value		R/W
+40404 		3			Startup Value		R/W
+
+The value definition of DI Event Status
+Bit	Description
+0 	Unreliable DI value (UART Timeout)
+1 	Safety Value triggered
+2 	Startup Value triggered
+
+The value definition of AO Status
+First register
+Bit	Description
+0 	Fail to provide AO Value
+3 	No Output Current)
+9 	Zero/Span Calibration Error
+
+Second register
+Bit 	Description
+0 	DI triggered to Safety Value
+1 	DI triggered to Startup Value
+2 	AO triggered to Fail Safety Value
+
+Type Code Table
+Input Range 	Type Code (HEX)
+0 ~ 20 mA 	0x0182
+4 ~ 20 mA 	0x0180
+0 ~ 10 V 	0x0148
+0 ~ 5 V 	0x0147
++/- 10 V 	0x0143
++/- 5 V 	0x0142

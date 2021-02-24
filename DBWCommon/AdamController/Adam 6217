@@ -1,0 +1,54 @@
+ADAM-6217 8-ch Isolated Analog Input Module
+
+Address (4X):
+Address (4X)	Channel			Description		Attribute
+40001 		0			AI Value		Read
+40002 		1			AI Value		Read
+40003		2			AI Value		Read
+40004		3			AI Value		Read
+40005		4			AI Value		Read
+40006		5			AI Value		Read
+40007		6			AI Value		Read
+40008		7			AI Value		Read
+40009		Average Ch0 - 7 	AI Value		Read
+
+40101 - 40102 	0 			AI Status		Read
+40103 - 40104 	1 			AI Status		Read
+40105 - 40106 	2 			AI Status		Read
+40107 - 40108 	3 			AI Status		Read
+40109 - 40110 	4 			AI Status		Read
+40111 - 40112 	5 			AI Status		Read
+40113 - 40114 	6 			AI Status		Read
+40115 - 40116 	7 			AI Status		Read
+
+40201 		0 			Type Code		R/W
+40202 		1 			Type Code		R/W
+40203 		2 			Type Code		R/W
+40204 		3 			Type Code		R/W
+40205 		4 			Type Code		R/W
+40206 		5 			Type Code		R/W
+40207 		6 			Type Code		R/W
+40208 		7 			Type Code		R/W
+40209 		Average Ch0 - 7 	Type Code		Read
+
+40221 		All 			AI Channel Enable	R/W
+
+The value definition of AI Status
+Bit	Description
+0	Failed to provide AI value (UART timeout)
+1	Over Range
+2	Under Range
+3	Open Circuit (Burnout)
+7	AD Converter failed
+9	Zero/Span Calibration Error
+
+Type code table
+Input Range 	Type Code (HEX)
++/- 10V 	0x0143
++/- 5 V 	0x0142
++/- 1 V 	0x0140
++/- 500 mV 	0x0104
++/- 150 mV 	0x0103
++/- 20 mA 	0x0181
+0 ~ 20 mA 	0x0182
+4 ~ 20 mA	0x0180
