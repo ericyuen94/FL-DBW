@@ -524,6 +524,159 @@ void VCMProcess::SpeedController()
 	 *
 	 *	brake =
 	 */
+
+	 float speed_error = desired_speed - Speed_feedback;
+	 float acc_error = desired_acc - acc;
+	 //if speed_error < 0 its deceleration
+	//Assume 3 ranges (s,m,l) small, medium, large
+
+	//rules
+	bool speed_level[3];
+	bool acceleration_level[3];
+
+	float small,medium,large;
+	float smallacc,mediumacc,largeacc;
+
+	if(speed_error <= 0.3)
+	{
+		speed_level[0] = true;
+	}
+	else if(speed_error <= 0.5)
+	{
+		speed_level[0] = true;
+		speed_level[1] = true;
+
+	}
+	else if(speed_error <= 0.7)
+	{
+		speed_level[1] = true;
+		speed_level[2] = true;
+	}
+	else
+	{
+		speed_level[2] = true;
+	}
+
+	
+	if(acc_error <= 0.3)
+	{
+		acceleration_level[0] = true;
+	}
+	else if(acc_error <= 0.5)
+	{
+		acceleration_level[0] = true;
+		acceleration_level[1] = true;
+
+	}
+	else if(acc_error <= 0.7)
+	{
+		acceleration_level[1] = true;
+		acceleration_level[2] = true;
+	}
+	else
+	{
+		acceleration_level[2] = true;
+	}
+
+	std::vector<float> output;
+	output.clear();
+	//check which rules are applicable
+	for(int i=0;i<3;i++)
+	{
+		for(int j=0;j<3;j++)
+		{
+			if(speed_level[i] && acceleration_level[j])
+			{
+				//this rule is applicable
+				float output1 = 1e6;
+				float output2 = 1e6;
+				if(speed_error <= 0.3)
+				{
+					speed_error1 = 1.0;
+				}
+				else if(speed_error <= 0.5)
+				{
+					speed_error1 = speed_error*-gradient + find_Constant(0,0.5,-gradient);
+					speed_error2 = speed_error*gradient + find_Constant(0,0.3,gradient);
+				}
+				else if(speed_error <= 0.7)
+				{
+					speed_error1 = speed_error*-gradient + find_Constant(1,0.5,-gradient);
+					speed_error2 = speed_error*gradient + find_Constant(0,0.5,gradient);
+				}
+				else
+				{
+					speed_error1 = 1.0;
+				}
+				//
+				if(acc_error <= 0.3)
+				{
+					acc_error1 = 1.0;
+				}
+				else if(acc_error <= 0.5)
+				{
+					acc_error1 = acc_error*-gradient + find_Constant(0,0.5,-gradient);
+					acc_error2 = acc_error*gradient + find_Constant(0,0.3,gradient);
+				}
+				else if(speed_error <= 0.7)
+				{
+					acc_error1 = acc_error*-gradient + find_Constant(1,0.5,-gradient);
+					acc_error2 = acc_error*gradient + find_Constant(0,0.5,gradient);
+				}
+				else
+				{
+					acc_error1 = 1.0;
+				}
+				//
+				int slvl = rule_table(i,j);
+				float res_1 = min(speed_error1, acc_error1); //determine which speed/acc level to use
+				float res_2 = min(speed_error2, acc_error2); //determine which speed/acc level to use
+				res_1 = res_1 * slvl; //determine high/low speed
+				res_2 = res_2 * slvl; //determine high/low speed
+				if(slvl <= 0.3) //low output
+				{
+					output.push_back(res_1);	
+				}
+				else //high output
+				{
+					output.push_back(res_2);
+				}
+			}
+		}
+	}
+
+}
+
+float VCMProcess::find_Constant(float y, float x, float m)
+{
+	float constant = y-(m*x);
+	return constant;
+}
+
+float VCMProcess::rule_table(int i, int j)
+{
+	float ret = 0;
+	float low_factor = 0.3;
+	float high_factor = 0.7;
+	//i = 0 and j = 0, speed = low
+	//i = 1 and j = 0, speed = low
+	if(i == 0)
+	{
+		ret = low_factor;
+	}
+	else if(i == 1 && j == 0)
+	{
+		ret = low_factor;
+	}
+	else if(i == 1 && j != 0)
+	{
+		ret = high_factor;
+	}
+	else
+	{
+		ret = high_factor;
+	}
+	return ret;
 }
 
 VCMProcess::~VCMProcess()

@@ -89,6 +89,10 @@ private:
 
 	void SpeedController();
 
+	float find_Constant(float y, float x, float m);
+
+	float rule_table(int i, int j);
+
 	float64_t PID(
 			const float64_t Pgain, 
 			const float64_t Igain, 
