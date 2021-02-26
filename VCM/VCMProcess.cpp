@@ -21,10 +21,10 @@ VCMProcess::VCMProcess(std::shared_ptr<RetreiveVIMStatus> sptr_RetreiveVIMStatus
 		std::shared_ptr<RetrievePLMStatus> sptr_RetrievePLMStatus,
 		std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd,
 		std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU):
-		sptr_RetreiveVIMStatus_(sptr_RetreiveVIMStatus),
-		sptr_RetrievePLMStatus_(sptr_RetrievePLMStatus),
-		sptr_RetrieveVcmCmd_(sptr_RetrieveVcmCmd),
-		sptr_RetrieveVcmCmd_NTU_(sptr_RetrieveVcmCmd_NTU)
+						sptr_RetreiveVIMStatus_(sptr_RetreiveVIMStatus),
+						sptr_RetrievePLMStatus_(sptr_RetrievePLMStatus),
+						sptr_RetrieveVcmCmd_(sptr_RetrieveVcmCmd),
+						sptr_RetrieveVcmCmd_NTU_(sptr_RetrieveVcmCmd_NTU)
 {
 	//reset health status
 	msg_health_status.system_state = Platform::ePLM_Status::PLMStatus_Invalid;
@@ -71,9 +71,9 @@ void VCMProcess::SetConfigParams(const VCMCSCI_Config &config_params)
 
 	//
 	std::cout << "[VCMProcess] = SetConfigParams max_steer =  " << config_params_.max_steer
-			 << " max_speed =  " << config_params_.max_speed
-			 << " veh_length =  " << default_vehicle_length
-			 << std::endl;
+			<< " max_speed =  " << config_params_.max_speed
+			<< " veh_length =  " << default_vehicle_length
+			<< std::endl;
 }
 
 void VCMProcess::PrintVCM_DBWStatus()
@@ -86,8 +86,8 @@ void VCMProcess::PrintVCM_DBWStatus()
 	std::cout << "System Time " << current_timestamp << std::endl;
 	std::cout << " " << std::endl;
 	std::cout << "[XML] = SetConfigParams max_steer =  " << config_params_.max_steer
-			 << " max_speed =  " << config_params_.max_speed
-			 << std::endl;
+			<< " max_speed =  " << config_params_.max_speed
+			<< std::endl;
 
 	//
 	if(msg_health_status.unmmaned_mode)
@@ -165,6 +165,10 @@ void VCMProcess::GetPLMHealthStatus(platform_liveness_status &status)
 
 void VCMProcess::operator()()
 {
+	SpeedController();
+	return;
+
+	//
 	//time tracker only
 	int64_t current_timestamp;
 	current_timestamp = Common::Utility::Time::getmsCountSinceEpoch();
@@ -191,10 +195,10 @@ void VCMProcess::operator()()
 	{
 		std::cout << "!! Not waypoint mode " <<  msg_health_status.system_state << std::endl;
 	}
-		std::cout << msg_health_status.lost_aux_message_heartbeat << ","
-	<< msg_health_status.hw_estop_status << ","
-	<< msg_health_status.unmmaned_mode
-	<< std::endl;
+	std::cout << msg_health_status.lost_aux_message_heartbeat << ","
+			<< msg_health_status.hw_estop_status << ","
+			<< msg_health_status.unmmaned_mode
+			<< std::endl;
 	//
 	if((msg_health_status.lost_aux_message_heartbeat==false)
 			&& (msg_health_status.hw_estop_status == false)
@@ -260,16 +264,16 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 	float64_t speed_mpersec;
 	//Convert speed input from m/s to percent
 	speed_mpersec = PID(	1.0, 						//P gain
-							0.0, 						//I gain
-							0.0, 						//D gain
-							0.01, 						//dt
-							-0.81,						//min (3km/h) reverse
-							2.77,						//max (10km/h)
-							desired_speed,				//Desired
-							0.0,						//current feedback (DBW Speed feedback)
-							Prev_velo,					//prev feedback
-							Velocity_Intergral_error);	//Integral error
-							
+			0.0, 						//I gain
+			0.0, 						//D gain
+			0.01, 						//dt
+			-0.81,						//min (3km/h) reverse
+			2.77,						//max (10km/h)
+			desired_speed,				//Desired
+			0.0,						//current feedback (DBW Speed feedback)
+			Prev_velo,					//prev feedback
+			Velocity_Intergral_error);	//Integral error
+
 	//
 	// GetBoundaryCheckLinearSpeed(desired_speed,speed_mpersec);
 	//Steer is already in angle
@@ -279,15 +283,15 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 	//compute cmd steer in percentage
 	float64_t steer_radpersec;
 	steer_radpersec = PID(	1.8, 						//P gain
-						0.0, 						//I gain
-						0.0, 						//D gain
-						0.01, 						//dt
-						-M_PI_2,					//min
-						M_PI_2,						//max
-						current_curvature,			//Desired angle(rad)
-						0.0,						//current feedback (DBW steer feedback)
-						Prev_Steer,					//prev feedback angle(rad)
-						Steer_Intergral_error);		//Integral error;
+			0.0, 						//I gain
+			0.0, 						//D gain
+			0.01, 						//dt
+			-M_PI_2,					//min
+			M_PI_2,						//max
+			current_curvature,			//Desired angle(rad)
+			0.0,						//current feedback (DBW steer feedback)
+			Prev_Steer,					//prev feedback angle(rad)
+			Steer_Intergral_error);		//Integral error;
 	//publish stkci
 	std::cout << "VCM - Speed = " << speed_mpersec << std::endl;
 	std::cout << "VCM - Steer = " << steer_radpersec << std::endl;
@@ -329,34 +333,34 @@ void VCMProcess::GetBoundaryCheckLinearSpeed(float64_t current_speed, float64_t 
 {
 
 	//update formula
-//	new_speed = 0.543641109 * pow(current_speed, 3) - 1.216053406 * pow(current_speed, 2) + 1.024657709 * current_speed + 0.385845871;
-//	if(current_speed == 0)
-//	{
-//		new_speed = 0.0;
-//	}
-//
-//	if(new_speed<=-(new_speed * default_max_speed_percent))
-//	{
-//		new_speed = -(new_speed * default_max_speed_percent);
-//	}
-//
-//
-//	if(new_speed>=(new_speed * default_max_speed_percent))
-//	{
-//		new_speed = (new_speed * default_max_speed_percent);
-//	}
+	//	new_speed = 0.543641109 * pow(current_speed, 3) - 1.216053406 * pow(current_speed, 2) + 1.024657709 * current_speed + 0.385845871;
+	//	if(current_speed == 0)
+	//	{
+	//		new_speed = 0.0;
+	//	}
+	//
+	//	if(new_speed<=-(new_speed * default_max_speed_percent))
+	//	{
+	//		new_speed = -(new_speed * default_max_speed_percent);
+	//	}
+	//
+	//
+	//	if(new_speed>=(new_speed * default_max_speed_percent))
+	//	{
+	//		new_speed = (new_speed * default_max_speed_percent);
+	//	}
 
 	//updated method
-//	new_speed = current_speed;
-//	if(current_speed<=-(default_max_speed_percent*current_speed))
-//	{
-//		new_speed = -(default_max_speed_percent*current_speed);
-//	}
-//
-//	if(current_speed>=(default_max_speed_percent*current_speed))
-//	{
-//		new_speed = (default_max_speed_percent*current_speed);
-//	}
+	//	new_speed = current_speed;
+	//	if(current_speed<=-(default_max_speed_percent*current_speed))
+	//	{
+	//		new_speed = -(default_max_speed_percent*current_speed);
+	//	}
+	//
+	//	if(current_speed>=(default_max_speed_percent*current_speed))
+	//	{
+	//		new_speed = (default_max_speed_percent*current_speed);
+	//	}
 
 	//old method
 	new_speed = current_speed;
@@ -471,40 +475,40 @@ void VCMProcess::GetSystemStatus()
 }
 
 float64_t VCMProcess::PID(
-			const float64_t Pgain, 
-			const float64_t Igain, 
-			const float64_t Dgain, 
-			const float64_t dt, 
-			const float64_t min,
-			const float64_t max,
-			const float64_t des,
-			const float64_t cur,
-			float64_t prev,
-			float64_t Ierror)
+		const float64_t Pgain,
+		const float64_t Igain,
+		const float64_t Dgain,
+		const float64_t dt,
+		const float64_t min,
+		const float64_t max,
+		const float64_t des,
+		const float64_t cur,
+		float64_t prev,
+		float64_t Ierror)
 {
 
-		float64_t output = 0;
-		float64_t steer_error = des - cur;		// Calculate error
-		float32_t Pout = Pgain * steer_error;				// Proportional term
-		Ierror += steer_error * dt;	// Integral term
-		// if(fabs(Ierror) >= 100.0)
-		// 	Ierror = 100 * (fabs(Ierror)/Ierror);	//Limits integral term 
-		float32_t Iout = Igain * Ierror;
-		float32_t derivative = (steer_error - prev) / dt;	// Derivative term
-		float32_t Dout = Dgain * derivative;
+	float64_t output = 0;
+	float64_t steer_error = des - cur;		// Calculate error
+	float32_t Pout = Pgain * steer_error;				// Proportional term
+	Ierror += steer_error * dt;	// Integral term
+	// if(fabs(Ierror) >= 100.0)
+	// 	Ierror = 100 * (fabs(Ierror)/Ierror);	//Limits integral term
+	float32_t Iout = Igain * Ierror;
+	float32_t derivative = (steer_error - prev) / dt;	// Derivative term
+	float32_t Dout = Dgain * derivative;
 
-		// Calculate total output
-		output = Pout + Iout + Dout;
-		
-		// Restrict to max/min
-		if (output > max)
-			output = max;
-		else if (output < min)
-			output = min;
+	// Calculate total output
+	output = Pout + Iout + Dout;
 
-		prev = cur;
+	// Restrict to max/min
+	if (output > max)
+		output = max;
+	else if (output < min)
+		output = min;
 
-		return output;
+	prev = cur;
+
+	return output;
 }
 
 void VCMProcess::SpeedController()
@@ -525,158 +529,161 @@ void VCMProcess::SpeedController()
 	 *	brake =
 	 */
 
-	 float speed_error = desired_speed - Speed_feedback;
-	 float acc_error = desired_acc - acc;
-	 //if speed_error < 0 its deceleration
-	//Assume 3 ranges (s,m,l) small, medium, large
+	FuzzyController::FuzzyFunction *FuzzySpdErrorSet[5];
 
-	//rules
-	bool speed_level[3];
-	bool acceleration_level[3];
+	FuzzySpdErrorSet[0] = new FuzzyController::FuzTrapezoid;
+	FuzzySpdErrorSet[0]->setName("XS speed error");
+	FuzzySpdErrorSet[0]->setInterval(0.0,0.3);
+	FuzzySpdErrorSet[0]->setMiddle(0.0,0.1);
 
-	float small,medium,large;
-	float smallacc,mediumacc,largeacc;
+	FuzzySpdErrorSet[1] = new FuzzyController::FuzTriangle;
+	FuzzySpdErrorSet[1]->setName("SM speed error");
+	FuzzySpdErrorSet[1]->setInterval(0.1,0.5);
+	FuzzySpdErrorSet[1]->setMiddle(0.3,0.3);
 
-	if(speed_error <= 0.3)
-	{
-		speed_level[0] = true;
-	}
-	else if(speed_error <= 0.5)
-	{
-		speed_level[0] = true;
-		speed_level[1] = true;
+	FuzzySpdErrorSet[2] = new FuzzyController::FuzTriangle;
+	FuzzySpdErrorSet[2]->setName("ME speed error");
+	FuzzySpdErrorSet[2]->setInterval(0.3,0.7);
+	FuzzySpdErrorSet[2]->setMiddle(0.5,0.5);
 
-	}
-	else if(speed_error <= 0.7)
-	{
-		speed_level[1] = true;
-		speed_level[2] = true;
-	}
-	else
-	{
-		speed_level[2] = true;
-	}
+	FuzzySpdErrorSet[3] = new FuzzyController::FuzTriangle;
+	FuzzySpdErrorSet[3]->setName("LG speed error");
+	FuzzySpdErrorSet[3]->setInterval(0.5,0.9);
+	FuzzySpdErrorSet[3]->setMiddle(0.7,0.7);
 
-	
-	if(acc_error <= 0.3)
-	{
-		acceleration_level[0] = true;
-	}
-	else if(acc_error <= 0.5)
-	{
-		acceleration_level[0] = true;
-		acceleration_level[1] = true;
+	FuzzySpdErrorSet[4] = new FuzzyController::FuzTrapezoid;
+	FuzzySpdErrorSet[4]->setName("XL speed error");
+	FuzzySpdErrorSet[4]->setInterval(0.7,1.0);
+	FuzzySpdErrorSet[4]->setMiddle(0.9,1.0);
 
-	}
-	else if(acc_error <= 0.7)
-	{
-		acceleration_level[1] = true;
-		acceleration_level[2] = true;
-	}
-	else
-	{
-		acceleration_level[2] = true;
-	}
+	std::vector<FuzzyController::FuzzySolution> Spd_output;
 
-	std::vector<float> output;
-	output.clear();
-	//check which rules are applicable
-	for(int i=0;i<3;i++)
+	double speed_error = 0.88;
+	int j = 0;
+
+	for (int i = 0; i < 5; i++)
 	{
-		for(int j=0;j<3;j++)
+		if(FuzzySpdErrorSet[i]->isDotinInterval(speed_error))
 		{
-			if(speed_level[i] && acceleration_level[j])
-			{
-				//this rule is applicable
-				float output1 = 1e6;
-				float output2 = 1e6;
-				if(speed_error <= 0.3)
-				{
-					speed_error1 = 1.0;
-				}
-				else if(speed_error <= 0.5)
-				{
-					speed_error1 = speed_error*-gradient + find_Constant(0,0.5,-gradient);
-					speed_error2 = speed_error*gradient + find_Constant(0,0.3,gradient);
-				}
-				else if(speed_error <= 0.7)
-				{
-					speed_error1 = speed_error*-gradient + find_Constant(1,0.5,-gradient);
-					speed_error2 = speed_error*gradient + find_Constant(0,0.5,gradient);
-				}
-				else
-				{
-					speed_error1 = 1.0;
-				}
-				//
-				if(acc_error <= 0.3)
-				{
-					acc_error1 = 1.0;
-				}
-				else if(acc_error <= 0.5)
-				{
-					acc_error1 = acc_error*-gradient + find_Constant(0,0.5,-gradient);
-					acc_error2 = acc_error*gradient + find_Constant(0,0.3,gradient);
-				}
-				else if(speed_error <= 0.7)
-				{
-					acc_error1 = acc_error*-gradient + find_Constant(1,0.5,-gradient);
-					acc_error2 = acc_error*gradient + find_Constant(0,0.5,gradient);
-				}
-				else
-				{
-					acc_error1 = 1.0;
-				}
-				//
-				int slvl = rule_table(i,j);
-				float res_1 = min(speed_error1, acc_error1); //determine which speed/acc level to use
-				float res_2 = min(speed_error2, acc_error2); //determine which speed/acc level to use
-				res_1 = res_1 * slvl; //determine high/low speed
-				res_2 = res_2 * slvl; //determine high/low speed
-				if(slvl <= 0.3) //low output
-				{
-					output.push_back(res_1);	
-				}
-				else //high output
-				{
-					output.push_back(res_2);
-				}
-			}
+			std::string n;
+			FuzzySpdErrorSet[i]->GetName(n);
+//			std::cout << "Name of fuzzy set : " << n << std::endl;
+			// do string compare to cross check rule table
+			FuzzyController::FuzzySolution spdout;
+			spdout.SetValue(FuzzySpdErrorSet[i]->GetValue(speed_error));
+			spdout.setName(n);
+			Spd_output.push_back(spdout);
 		}
 	}
 
+	//
+
+	FuzzyController::FuzzyFunction *FuzzyAccErrorSet[5];
+
+	FuzzyAccErrorSet[0] = new FuzzyController::FuzTrapezoid;
+	FuzzyAccErrorSet[0]->setName("XS acc error");
+	FuzzyAccErrorSet[0]->setInterval(0.0,0.3);
+	FuzzyAccErrorSet[0]->setMiddle(0.0,0.1);
+
+	FuzzyAccErrorSet[1] = new FuzzyController::FuzTriangle;
+	FuzzyAccErrorSet[1]->setName("SM acc error");
+	FuzzyAccErrorSet[1]->setInterval(0.1,0.5);
+	FuzzyAccErrorSet[1]->setMiddle(0.3,0.3);
+
+	FuzzyAccErrorSet[2] = new FuzzyController::FuzTriangle;
+	FuzzyAccErrorSet[2]->setName("ME acc error");
+	FuzzyAccErrorSet[2]->setInterval(0.3,0.7);
+	FuzzyAccErrorSet[2]->setMiddle(0.5,0.5);
+
+	FuzzyAccErrorSet[3] = new FuzzyController::FuzTriangle;
+	FuzzyAccErrorSet[3]->setName("LG acc error");
+	FuzzyAccErrorSet[3]->setInterval(0.5,0.9);
+	FuzzyAccErrorSet[3]->setMiddle(0.7,0.7);
+
+	FuzzyAccErrorSet[4] = new FuzzyController::FuzTrapezoid;
+	FuzzyAccErrorSet[4]->setName("XL acc error");
+	FuzzyAccErrorSet[4]->setInterval(0.7,1.0);
+	FuzzyAccErrorSet[4]->setMiddle(0.9,1.0);
+
+	std::vector<FuzzyController::FuzzySolution> Acc_output;
+
+	double acc_error = 0.6;
+	int k = 0;
+
+	for (int i = 0; i < 5; i++)
+	{
+		if(FuzzyAccErrorSet[i]->isDotinInterval(acc_error))
+		{
+			std::string n;
+			FuzzyAccErrorSet[i]->GetName(n);
+			// do string compare to cross check rule table
+			FuzzyController::FuzzySolution accout;
+			accout.SetValue(FuzzyAccErrorSet[i]->GetValue(acc_error));
+			accout.setName(n);
+			Acc_output.push_back(accout);
+		}
+	}
+
+	//Check which rule is applicable
+	std::string a, b;
+	float outdata[2];
+	double weighted_sum=0;
+	for(int i=0;i<Acc_output.size() && i<Spd_output.size();i++)
+	{
+		Spd_output[i].GetName(a);
+		Acc_output[i].GetName(b);
+		std::cout << "speed	output = " << Spd_output[i].out_data << std::endl;
+		std::cout << "acc	output = " << Acc_output[i].out_data << std::endl;
+		std::cout << a << std::endl << b <<std::endl;
+		outdata[i] = std::min(Spd_output[i].out_data,Acc_output[i].out_data);
+		weighted_sum+=outdata[i];
+		std::cout << "Min = " << outdata[i] << std::endl;
+		outdata[i] = outdata[i] * rule_table(a,b);
+ 	}
+	//
+	std::cout <<"weighted sum = " << weighted_sum <<std::endl;
+	double final_output = (outdata[0] + outdata[1]) / weighted_sum;
+	std::cout << "final output = " << final_output << std::endl;
+
 }
 
-float VCMProcess::find_Constant(float y, float x, float m)
-{
-	float constant = y-(m*x);
-	return constant;
-}
 
-float VCMProcess::rule_table(int i, int j)
+float VCMProcess::rule_table(std::string spd_error, std::string acc_error)
 {
-	float ret = 0;
-	float low_factor = 0.3;
-	float high_factor = 0.7;
-	//i = 0 and j = 0, speed = low
-	//i = 1 and j = 0, speed = low
-	if(i == 0)
+	std::string line;
+	std::ifstream myRule;
+	myRule.open("/home/pallet/Desktop/Rules.txt", std::ifstream::in);
+	if(myRule.is_open())
 	{
-		ret = low_factor;
-	}
-	else if(i == 1 && j == 0)
-	{
-		ret = low_factor;
-	}
-	else if(i == 1 && j != 0)
-	{
-		ret = high_factor;
+		while(getline(myRule, line))
+		{
+			//(e.g line) "XL speed error + XL acc error = high"
+			//(e.g line) "XS speed error + XS acc error = low"
+			if(line.compare(0,14,spd_error) == 0 && line.compare(17,12,acc_error) == 0)
+			{
+				if(line.compare(32,4,"high")==0)
+				{
+					//return high speed factor
+					std::cout << "HIGH "<< line <<std::endl;
+					return 0.7;
+				}
+				else if(line.compare(32,3,"low")==0)
+				{
+					//return low speed factor
+					std::cout << "LOW " << line <<std::endl;
+					return 0.3;
+				}
+			}
+		}
+		myRule.close();
+		return 0;
 	}
 	else
 	{
-		ret = high_factor;
+		//unable to open files
+		std::cout <<"Unable to Open File" <<std::endl;
+		return 0;
 	}
-	return ret;
 }
 
 VCMProcess::~VCMProcess()

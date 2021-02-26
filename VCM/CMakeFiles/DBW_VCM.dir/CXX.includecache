@@ -242,6 +242,18 @@ stkci_Noncopyable.h
 stkci_StreamAdapters.h
 /proj/pallet/KXRCommonShared/include/STKCI/stkci_StreamAdapters.h
 
+/proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp
+FuzzyController.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
+
+/proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
+iostream
+-
+cmath
+-
+string
+-
+
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VCMConfig.h
 
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VCMInitializeController.cpp
@@ -307,6 +319,10 @@ memory
 -
 map
 -
+string
+-
+fstream
+-
 Platform/Sensors/SensorsStkciPubData.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/Platform/Sensors/SensorsStkciPubData.h
 Platform/Utility/GetVehConfiguration.h
@@ -321,6 +337,8 @@ RetrievePLMStatus.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrievePLMStatus.h
 RetrieveVcmCmd.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrieveVcmCmd.h
+../DBWCommon/FuzzyLogicController/FuzzyController.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetreiveVIMStatus.cpp
 RetreiveVIMStatus.h

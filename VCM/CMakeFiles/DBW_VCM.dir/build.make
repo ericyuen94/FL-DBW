@@ -225,6 +225,30 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o.provides:
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o.provides.build: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o
 
 
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/flags.make
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/proj/pallet/Tatooine/branch-forklift/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o"
+	cd /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o -c /proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i"
+	cd /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp > CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s"
+	cd /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp -o CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.requires:
+
+.PHONY : component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.requires
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.provides: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.requires
+	$(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.provides.build
+.PHONY : component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.provides
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.provides.build: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o
+
+
 # Object files for target DBW_VCM
 DBW_VCM_OBJECTS = \
 "CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o" \
@@ -233,7 +257,8 @@ DBW_VCM_OBJECTS = \
 "CMakeFiles/DBW_VCM.dir/main.cpp.o" \
 "CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o" \
 "CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o" \
-"CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o"
+"CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o" \
+"CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o"
 
 # External object files for target DBW_VCM
 DBW_VCM_EXTERNAL_OBJECTS =
@@ -245,13 +270,14 @@ DBW_VCM_EXTERNAL_OBJECTS =
 /proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o
 /proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o
 /proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o
+/proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o
 /proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make
 /proj/pallet/Tatooine/binbranch/DBW_VCM: /proj/pallet/Tatooine/lib/libProjectPlatformController.a
 /proj/pallet/Tatooine/binbranch/DBW_VCM: /proj/pallet/Tatooine/lib/libProjectPlatformUtility.a
 /proj/pallet/Tatooine/binbranch/DBW_VCM: /proj/pallet/Tatooine/lib/libProjectPlatformSensors.a
 /proj/pallet/Tatooine/binbranch/DBW_VCM: /proj/pallet/Tatooine/lib/libUGVDataMessagesCommon.so
 /proj/pallet/Tatooine/binbranch/DBW_VCM: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/proj/pallet/Tatooine/branch-forklift/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable /proj/pallet/Tatooine/binbranch/DBW_VCM"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/proj/pallet/Tatooine/branch-forklift/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable /proj/pallet/Tatooine/binbranch/DBW_VCM"
 	cd /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/DBW_VCM.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -266,6 +292,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires: component/DBW/VCM/CMakeFiles/
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o.requires
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o.requires
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o.requires
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires: component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o.requires
 
 .PHONY : component/DBW/VCM/CMakeFiles/DBW_VCM.dir/requires
 

@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetreiveVIMStatus.cpp" "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o"
   "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrievePLMStatus.cpp" "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o"
   "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveVcmCmd.cpp" "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o"
+  "/proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp" "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o"
   "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/main.cpp" "/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/CMakeFiles/DBW_VCM.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
@@ -40,6 +41,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/proj/pallet/Tatooine/include"
   "component/DBW/VCM"
   "component/DBW/VCM/VcmComms"
+  "component/DBW/DBWCommon/FuzzyLogicController"
   )
 
 # Targets to which this target links.

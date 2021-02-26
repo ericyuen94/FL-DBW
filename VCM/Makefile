@@ -331,6 +331,33 @@ VcmComms/RetrieveVcmCmd.cpp.s:
 	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.s
 .PHONY : VcmComms/RetrieveVcmCmd.cpp.s
 
+__/DBWCommon/FuzzyLogicController/FuzzyController.o: __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o
+
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.o
+
+# target to build an object file
+__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o
+
+__/DBWCommon/FuzzyLogicController/FuzzyController.i: __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i
+
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.i
+
+# target to preprocess a source file
+__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.i
+
+__/DBWCommon/FuzzyLogicController/FuzzyController.s: __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s
+
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.s
+
+# target to generate assembly for a file
+__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s
+.PHONY : __/DBWCommon/FuzzyLogicController/FuzzyController.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -389,6 +416,9 @@ help:
 	@echo "... VcmComms/RetrieveVcmCmd.o"
 	@echo "... VcmComms/RetrieveVcmCmd.i"
 	@echo "... VcmComms/RetrieveVcmCmd.s"
+	@echo "... __/DBWCommon/FuzzyLogicController/FuzzyController.o"
+	@echo "... __/DBWCommon/FuzzyLogicController/FuzzyController.i"
+	@echo "... __/DBWCommon/FuzzyLogicController/FuzzyController.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

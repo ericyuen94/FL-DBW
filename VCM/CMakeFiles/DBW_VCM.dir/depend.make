@@ -28,6 +28,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: /proj/pa
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_primitives.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_status.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_tree_node.h
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: component/DBW/VCM/VCMConfig.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: component/DBW/VCM/VCMInitializeController.cpp
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o: component/DBW/VCM/VCMInitializeController.h
@@ -197,6 +198,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: /proj/pallet/KXRCommo
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_primitives.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_status.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_tree_node.h
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: component/DBW/VCM/VCMConfig.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: component/DBW/VCM/VCMInitializeController.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o: component/DBW/VCM/VCMManager.cpp
@@ -358,6 +360,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: /proj/pallet/KXRCommo
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_primitives.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_status.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: /proj/pallet/KXRCommonShared/include/STKCI/stkci_tree_node.h
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: component/DBW/VCM/VCMConfig.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: component/DBW/VCM/VCMProcess.cpp
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o: component/DBW/VCM/VCMProcess.h
@@ -754,6 +757,9 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o: /proj/pa
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o: /proj/pallet/Tatooine/include/Platform/Sensors/SensorsStkciSubData.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o: /proj/pallet/Tatooine/include/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o: component/DBW/VCM/VcmComms/RetrieveVcmCmd.h
+
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.cpp
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o: component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/main.cpp.o: /proj/pallet/KXRCommonShared/include/Common/Controller/BaseInitializeController.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/main.cpp.o: /proj/pallet/KXRCommonShared/include/Common/Controller/BaseManager.h

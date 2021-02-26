@@ -1,61 +1,58 @@
 #include <iostream>
 #include <cmath>
-#include <string.h>
+#include <string>
 
 namespace FuzzyController
 {
 class FuzzyFunction
 {
-    protected:
-    double left_point;
-    double right_point;
-    std::string name;
+protected:
+	double left_point;
+	double right_point;
+	std::string name;
 
-    public:
-    FuzzyFunction();
-    virtual ~FuzzyFunction();
+public:
+	FuzzyFunction();
+	virtual ~FuzzyFunction();
 
-    virtual void setInterval(double left, double right);
-    virtual void setMiddle(double left, double right);
-    virtual void setName(std::string s);
-    virtual double GetValue(double t);
-    bool isDotinInterval(double t);
-}
+	virtual void setInterval(double left, double right);
+	virtual void setMiddle(double left, double right);
+	virtual void setName(std::string s);
+	virtual double GetValue(double t);
+	bool isDotinInterval(double t);
+	void GetName(std::string &s);
+};
 
 class FuzTriangle: public FuzzyFunction
 {
-    private:
-    double middle;
+private:
+	double middle;
 
-    public:
+public:
+	void setMiddle(double left, double right);
+	double GetValue(double t);
 
-    void setMiddle(double left, double right)
-    {
-        middle = left;
-    }
+};
 
-    double GetValue(double t)
-    {
-        if(t <= left_point)
-        {
-            return 0;
-        }
-        else if(t < middle)
-        {
-            return ((t-left_point)/(middle-left_point));
-        }
-        else if(t == middle)
-        {
-            return 1.0;
-        }
-        else if(t < right_point)
-        {
-            return ((right_point-t)/(right_point - middle));
-        }
-        else
-        {
-            return 0;
-        }
-    }
-}
+class FuzTrapezoid: public FuzzyFunction
+{
+private:
+	double l_middle;
+	double r_middle;
+
+public:
+	void setMiddle(double left, double right);
+	double GetValue(double t);
+
+};
+
+class FuzzySolution: public FuzzyFunction
+{
+public:
+	double out_data;
+	void SetValue(double output)
+	{
+		out_data = output;
+	}
+};
 }

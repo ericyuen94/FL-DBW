@@ -11,6 +11,8 @@
 #include <cstdint>
 #include <memory>
 #include <map>
+#include <string>
+#include <fstream>
 //
 #include "Platform/Sensors/SensorsStkciPubData.h"
 #include "Platform/Utility/GetVehConfiguration.h"
@@ -20,6 +22,9 @@
 #include "RetreiveVIMStatus.h"
 #include "RetrievePLMStatus.h"
 #include "RetrieveVcmCmd.h"
+
+#include "../DBWCommon/FuzzyLogicController/FuzzyController.h"
+
 
 //
 namespace VCM
@@ -89,9 +94,7 @@ private:
 
 	void SpeedController();
 
-	float find_Constant(float y, float x, float m);
-
-	float rule_table(int i, int j);
+	float rule_table(std::string spd_error, std::string acc_error);
 
 	float64_t PID(
 			const float64_t Pgain, 
@@ -136,6 +139,10 @@ private:
 	//Status
 	platform_liveness_status msg_health_status;
 
+
+	//Fuzzy Controller
+
+	//rule txt
 };
 
 }
