@@ -2004,7 +2004,20 @@ void BydFLDriveSteerForkThread::TorqueBrake()
 	int vel = 0;
 
 	sptr_SmartMotorSteer->set_motor_torque();
-	sptr_SmartMotorSteer->set_throttle_motor_torque(6000);
+	sptr_SmartMotorSteer->set_throttle_motor_torque(6000);			// Max torque
+	sptr_SmartMotorSteer->set_throttle_motor_torque_slope(100000); 	//how fast it goes to desired torque
+	vel = sptr_SmartMotorSteer->get_motor_velocity();
+	if (fabs(vel) < 100000)
+	{
+		sptr_SmartMotorSteer->set_torque_motor_stop();
+	}
+}
+void BydFLDriveSteerForkThread::TorqueControl(float64_t torque)
+{
+	int vel = 0;
+	torque = torque * 6000;
+	sptr_SmartMotorSteer->set_motor_torque();
+	sptr_SmartMotorSteer->set_throttle_motor_torque(torque);
 	sptr_SmartMotorSteer->set_throttle_motor_torque_slope(100000);
 	vel = sptr_SmartMotorSteer->get_motor_velocity();
 	if (fabs(vel) < 100000)

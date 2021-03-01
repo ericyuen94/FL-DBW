@@ -173,6 +173,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMInitializeController.cpp.o
  /proj/pallet/Tatooine/include/Platform/Utility/GetVehConfiguration.h
  /proj/pallet/Tatooine/include/Platform/Utility/VehConfigurationStruct.h
  component/DBW/VCM/VcmComms/RetreiveVIMStatus.h
+ component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
  component/DBW/VCM/VcmComms/RetrievePLMStatus.h
  component/DBW/VCM/VcmComms/RetrieveVcmCmd.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o
@@ -343,6 +344,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMManager.cpp.o
  /proj/pallet/Tatooine/include/Platform/Utility/GetVehConfiguration.h
  /proj/pallet/Tatooine/include/Platform/Utility/VehConfigurationStruct.h
  component/DBW/VCM/VcmComms/RetreiveVIMStatus.h
+ component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
  component/DBW/VCM/VcmComms/RetrievePLMStatus.h
  component/DBW/VCM/VcmComms/RetrieveVcmCmd.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o
@@ -499,6 +501,7 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o
  /proj/pallet/Tatooine/include/Platform/Utility/GetVehConfiguration.h
  /proj/pallet/Tatooine/include/Platform/Utility/VehConfigurationStruct.h
  component/DBW/VCM/VcmComms/RetreiveVIMStatus.h
+ component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
  component/DBW/VCM/VcmComms/RetrievePLMStatus.h
  component/DBW/VCM/VcmComms/RetrieveVcmCmd.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o
@@ -586,6 +589,89 @@ component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o
  /proj/pallet/Tatooine/include/Platform/Sensors/SensorsStkciSubData.h
  /proj/pallet/Tatooine/include/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
  component/DBW/VCM/VcmComms/RetreiveVIMStatus.h
+component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveDBWFeedback.cpp.o
+ /proj/pallet/KXRCommonShared/include/Common/Convert/StringNumber.h
+ /proj/pallet/KXRCommonShared/include/Common/Entity/TreeNode.h
+ /proj/pallet/KXRCommonShared/include/Common/Utility/configFile.h
+ /proj/pallet/KXRCommonShared/include/Common/typedefs.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_GenImpl.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_GenInterface.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_MutualExclusion.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_Noncopyable.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_StreamAdapters.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_enums.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_primitives.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_status.h
+ /proj/pallet/KXRCommonShared/include/STKCI/stkci_tree_node.h
+ /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveDBWFeedback.cpp
+ /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
+ /proj/pallet/Tatooine/include/Interfaces/GeometryMsgsPoseWithCovarianceSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/GeometryMsgsPoseWithCovarianceSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/GeometryMsgsVehicleMeasureSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/GeometryMsgsVehicleMeasureSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/LiftCmdMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/LiftCmdMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/LiftFbkMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/LiftFbkMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsBoxLocationSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsBoxLocationSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsObjectList2dSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsObjectList2dSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsObstaclePoints2dSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/NavMsgsObstaclePoints2dSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletAuxCmdMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletAuxCmdMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletAuxFbkMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletAuxFbkMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBarcodeMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBarcodeMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBaseCmdMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBaseCmdMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBaseFbkMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletBaseFbkMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletDbwCmdMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletDbwCmdMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletDbwFbkMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletDbwFbkMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletGeneralStatusMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletGeneralStatusMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletJSONMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletJSONMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletPickupTriggerMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletPickupTriggerMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletRMSFeedBackSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/PalletRMSFeedBackSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsIMUSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsIMUSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsImageSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsImageSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsMagneticFieldSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsMagneticFieldSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsNovatelPoseSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsNovatelPoseSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsRadarSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsRadarSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsUnifiedLidarSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsUnifiedLidarSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsVNSPoseSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SensorMsgsVNSPoseSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SimRMSCmgMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SimRMSCmgMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SystemMsgsUGVHealthMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SystemMsgsUGVHealthMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/SystemMsgsUGVPlatformStatusSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/SystemMsgsUGVPlatformStatusSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/TiltMotorFbkMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/TiltMotorFbkMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/TiltMotorMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/TiltMotorMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/UGVDataMessages.h
+ /proj/pallet/Tatooine/include/Interfaces/VcmCmdMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/VcmCmdMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Interfaces/WaypointMsgSubImpl.h
+ /proj/pallet/Tatooine/include/Interfaces/WaypointMsgSubInterface.h
+ /proj/pallet/Tatooine/include/Platform/Sensors/SensorsStkciSubData.h
+ /proj/pallet/Tatooine/include/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
 component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o
  /proj/pallet/KXRCommonShared/include/Common/Convert/StringNumber.h
  /proj/pallet/KXRCommonShared/include/Common/Entity/TreeNode.h

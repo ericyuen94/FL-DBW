@@ -277,6 +277,33 @@ VcmComms/RetreiveVIMStatus.cpp.s:
 	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.s
 .PHONY : VcmComms/RetreiveVIMStatus.cpp.s
 
+VcmComms/RetrieveDBWFeedback.o: VcmComms/RetrieveDBWFeedback.cpp.o
+
+.PHONY : VcmComms/RetrieveDBWFeedback.o
+
+# target to build an object file
+VcmComms/RetrieveDBWFeedback.cpp.o:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveDBWFeedback.cpp.o
+.PHONY : VcmComms/RetrieveDBWFeedback.cpp.o
+
+VcmComms/RetrieveDBWFeedback.i: VcmComms/RetrieveDBWFeedback.cpp.i
+
+.PHONY : VcmComms/RetrieveDBWFeedback.i
+
+# target to preprocess a source file
+VcmComms/RetrieveDBWFeedback.cpp.i:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveDBWFeedback.cpp.i
+.PHONY : VcmComms/RetrieveDBWFeedback.cpp.i
+
+VcmComms/RetrieveDBWFeedback.s: VcmComms/RetrieveDBWFeedback.cpp.s
+
+.PHONY : VcmComms/RetrieveDBWFeedback.s
+
+# target to generate assembly for a file
+VcmComms/RetrieveDBWFeedback.cpp.s:
+	cd /proj/pallet/Tatooine/branch-forklift && $(MAKE) -f component/DBW/VCM/CMakeFiles/DBW_VCM.dir/build.make component/DBW/VCM/CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveDBWFeedback.cpp.s
+.PHONY : VcmComms/RetrieveDBWFeedback.cpp.s
+
 VcmComms/RetrievePLMStatus.o: VcmComms/RetrievePLMStatus.cpp.o
 
 .PHONY : VcmComms/RetrievePLMStatus.o
@@ -410,6 +437,9 @@ help:
 	@echo "... VcmComms/RetreiveVIMStatus.o"
 	@echo "... VcmComms/RetreiveVIMStatus.i"
 	@echo "... VcmComms/RetreiveVIMStatus.s"
+	@echo "... VcmComms/RetrieveDBWFeedback.o"
+	@echo "... VcmComms/RetrieveDBWFeedback.i"
+	@echo "... VcmComms/RetrieveDBWFeedback.s"
 	@echo "... VcmComms/RetrievePLMStatus.o"
 	@echo "... VcmComms/RetrievePLMStatus.i"
 	@echo "... VcmComms/RetrievePLMStatus.s"

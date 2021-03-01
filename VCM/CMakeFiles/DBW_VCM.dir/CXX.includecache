@@ -295,6 +295,8 @@ RetrievePLMStatus.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrievePLMStatus.h
 RetrieveVcmCmd.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrieveVcmCmd.h
+RetrieveDBWFeedback.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrieveDBWFeedback.h
 
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VCMManager.h
 Platform/Controller/BaseCSCIManager.h
@@ -337,11 +339,35 @@ RetrievePLMStatus.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrievePLMStatus.h
 RetrieveVcmCmd.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrieveVcmCmd.h
+RetrieveDBWFeedback.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/RetrieveDBWFeedback.h
 ../DBWCommon/FuzzyLogicController/FuzzyController.h
 /proj/pallet/Tatooine/branch-forklift/component/DBW/DBWCommon/FuzzyLogicController/FuzzyController.h
 
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetreiveVIMStatus.cpp
 RetreiveVIMStatus.h
+-
+
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveDBWFeedback.cpp
+RetrieveDBWFeedback.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
+cstring
+-
+
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
+Platform/Sensors/SensorsStkciSubData.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/Platform/Sensors/SensorsStkciSubData.h
+Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
+/proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
+mutex
+-
+list
+-
+cstdint
+-
+memory
+-
+map
 -
 
 /proj/pallet/Tatooine/branch-forklift/component/DBW/VCM/VcmComms/RetrievePLMStatus.cpp
@@ -2281,6 +2307,22 @@ Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
 component/DBW/VCM/VcmComms/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
 Common/Utility/TimeUtils.h
 component/DBW/VCM/VcmComms/Common/Utility/TimeUtils.h
+mutex
+-
+list
+-
+cstdint
+-
+memory
+-
+map
+-
+
+component/DBW/VCM/VcmComms/RetrieveDBWFeedback.h
+Platform/Sensors/SensorsStkciSubData.h
+component/DBW/VCM/VcmComms/Platform/Sensors/SensorsStkciSubData.h
+Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
+component/DBW/VCM/VcmComms/Platform/Sensors/SensorsUnifiedMiddlewareStruct.h
 mutex
 -
 list

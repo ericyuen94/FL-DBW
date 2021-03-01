@@ -12,6 +12,7 @@
 #include "RetreiveVIMStatus.h"
 #include "RetrievePLMStatus.h"
 #include "RetrieveVcmCmd.h"
+#include "RetrieveDBWFeedback.h"
 
 namespace VCM
 {
@@ -30,7 +31,9 @@ void VCMManager::setupSpecificCSCIResources()
 	sptr_RetrievePLMStatus = std::make_shared<RetrievePLMStatus>("PLM");
 	sptr_RetrieveVcmCmd = std::make_shared<RetrieveVcmCmd>("PathFollower");
 	sptr_RetrieveVcmCmd_NTU = std::make_shared<RetrieveVcmCmd>("NTUTrigger");
-	sptr_VCMProcess = std::make_shared<VCMProcess>(sptr_RetreiveVIMStatus,sptr_RetrievePLMStatus,sptr_RetrieveVcmCmd,sptr_RetrieveVcmCmd_NTU);
+	sptr_RetrieveDBWFeedback = std::make_shared<RetrieveDBWFeedback>("DBW");
+
+	sptr_VCMProcess = std::make_shared<VCMProcess>(sptr_RetreiveVIMStatus,sptr_RetrievePLMStatus,sptr_RetrieveVcmCmd,sptr_RetrieveVcmCmd_NTU,sptr_RetrieveDBWFeedback);
 
 	//
 	setInitializeController(sptr_init_controller); 	// mpInitController is used as Initialize state controller

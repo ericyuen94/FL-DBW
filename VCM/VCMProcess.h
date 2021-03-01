@@ -22,6 +22,7 @@
 #include "RetreiveVIMStatus.h"
 #include "RetrievePLMStatus.h"
 #include "RetrieveVcmCmd.h"
+#include "RetrieveDBWFeedback.h"
 
 #include "../DBWCommon/FuzzyLogicController/FuzzyController.h"
 
@@ -68,13 +69,16 @@ public:
 	VCMProcess(std::shared_ptr<RetreiveVIMStatus> sptr_RetreiveVIMStatus,
 			std::shared_ptr<RetrievePLMStatus> sptr_RetrievePLMStatus,
 			std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd,
-			std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU);
+			std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU,
+			std::shared_ptr<RetrieveDBWFeedback> sptr_RetrieveDBWFeedback);
 
 	void SetConfigParams(const VCMCSCI_Config &config_params);
 
 	void operator()();
 
 	void GetPLMHealthStatus(platform_liveness_status &status);
+
+	void GetUserInput_Thread();
 
 	~VCMProcess();
 
@@ -92,9 +96,10 @@ private:
 
 	void GetBoundaryCheckLinearSpeed(float64_t current_speed, float64_t &new_speed);
 
-	void SpeedController(double speed_error, double acc_error);
+	double SpeedController(double speed_error, double acc_error);
 
 	float rule_table(std::string spd_error, std::string acc_error);
+
 
 	float64_t PID(
 			const float64_t Pgain, 
@@ -125,13 +130,15 @@ private:
 	std::shared_ptr<RetrievePLMStatus> sptr_RetrievePLMStatus_;
 	std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_;
 	std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU_;
+	std::shared_ptr<RetrieveDBWFeedback> sptr_RetrieveDBWFeedback_;
 
 	//stkci messages
 	Platform::Sensors::PalletAuxFbkMsg vim_status;
 	Platform::Sensors::SystemMsgsUGVPlatformStatus plm_status_;
 	STKCI::VcmCmdMsg data_vcm_cmd;
 	STKCI::VcmCmdMsg data_vcm_cmd_NTU;
-
+	Platform::Sensors::PalletDbwFbkMsg dbw_feedback;
+	uint64_t dbw_feedback_prev_timestamp;
 	//publish stkci messages
 	std::shared_ptr<Platform::Sensors::SensorsStkciPubData> ptr_stkci_pub;
 	uint16_t seq_key_tracker_dbw_cmd;
@@ -141,7 +148,7 @@ private:
 
 
 	//Fuzzy Controller
-
+	float64_t brake_pressure;
 	//rule txt
 };
 

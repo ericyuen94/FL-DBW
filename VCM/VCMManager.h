@@ -20,6 +20,7 @@ class VCMProcess;
 class RetreiveVIMStatus;
 class RetrievePLMStatus;
 class RetrieveVcmCmd;
+class RetrieveDBWFeedback;
 
 //
 class VCMManager: public Platform::Controller::BaseCSCIManager
@@ -64,6 +65,7 @@ private:
      std::shared_ptr<RetrievePLMStatus> sptr_RetrievePLMStatus;
      std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd;
      std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU;
+     std::shared_ptr<RetrieveDBWFeedback> sptr_RetrieveDBWFeedback;
 
      //
      uint32_t plm_warning_status[Platform::PLM_STATUS_TOTAL_BITS];

@@ -20,11 +20,13 @@ VCMProcess::VCMProcess()
 VCMProcess::VCMProcess(std::shared_ptr<RetreiveVIMStatus> sptr_RetreiveVIMStatus,
 		std::shared_ptr<RetrievePLMStatus> sptr_RetrievePLMStatus,
 		std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd,
-		std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU):
+		std::shared_ptr<RetrieveVcmCmd> sptr_RetrieveVcmCmd_NTU,
+		std::shared_ptr<RetrieveDBWFeedback> sptr_RetrieveDBWFeedback):
 						sptr_RetreiveVIMStatus_(sptr_RetreiveVIMStatus),
 						sptr_RetrievePLMStatus_(sptr_RetrievePLMStatus),
 						sptr_RetrieveVcmCmd_(sptr_RetrieveVcmCmd),
-						sptr_RetrieveVcmCmd_NTU_(sptr_RetrieveVcmCmd_NTU)
+						sptr_RetrieveVcmCmd_NTU_(sptr_RetrieveVcmCmd_NTU),
+						sptr_RetrieveDBWFeedback_(sptr_RetrieveDBWFeedback)
 {
 	//reset health status
 	msg_health_status.system_state = Platform::ePLM_Status::PLMStatus_Invalid;
@@ -51,7 +53,8 @@ VCMProcess::VCMProcess(std::shared_ptr<RetreiveVIMStatus> sptr_RetreiveVIMStatus
 	Velocity_Intergral_error	= 0;
 	Prev_velo					= 0;
 	Steer_Intergral_error		= 0;
-	Prev_Steer					= 0;		
+	Prev_Steer					= 0;
+	brake_pressure				= 0;
 }
 
 void VCMProcess::SetConfigParams(const VCMCSCI_Config &config_params)
@@ -165,12 +168,12 @@ void VCMProcess::GetPLMHealthStatus(platform_liveness_status &status)
 
 void VCMProcess::operator()()
 {
-	int64_t current_timestamp_test, end_timestamp_test;
-	current_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
-	SpeedController(0.9,0.1);
-	end_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
-	std::cout << "Time taken for Speed Controller (ms) = " << end_timestamp_test - current_timestamp_test << std::endl;
-	return;
+//	int64_t current_timestamp_test, end_timestamp_test;
+//	current_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
+//	SpeedController(0.9,0.1);
+//	end_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
+//	std::cout << "Time taken for Speed Controller (ms) = " << end_timestamp_test - current_timestamp_test << std::endl;
+//	return;
 
 	//
 	//time tracker only
@@ -211,6 +214,14 @@ void VCMProcess::operator()()
 	{
 		//speed is a percentage.
 		//steer is in radians
+		if(sptr_RetrieveDBWFeedback_->GetPalletDBWFbkMsg(dbw_feedback))
+		{
+			send_zero_cmds = false;
+		}
+		else
+		{
+			send_zero_cmds = true;
+		}
 		if(sptr_RetrieveVcmCmd_->GetVcmCmd(data_vcm_cmd)) //From PathFollower
 		{
 			float64_t pfm_speed = data_vcm_cmd.velocity; //percentage
@@ -274,7 +285,7 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 			-0.81,						//min (3km/h) reverse
 			2.77,						//max (10km/h)
 			desired_speed,				//Desired
-			0.0,						//current feedback (DBW Speed feedback)
+			dbw_feedback.speed,			//current feedback (DBW Speed feedback)
 			Prev_velo,					//prev feedback
 			Velocity_Intergral_error);	//Integral error
 
@@ -283,7 +294,19 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 	//Steer is already in angle
 	float64_t converted_steer_angle = atan(desired_curvature*1.36); // 1.36 = wheel base of forklift
 	std::cout << "Steering angle = " << converted_steer_angle << std::endl;
-
+	//
+	float64_t speed_error = dbw_feedback.speed - desired_speed; // m/s
+	speed_error = speed_error / 2.77; //Get percentage
+	float64_t desired_acc = speed_error/(dbw_feedback.timestamp-dbw_feedback_prev_timestamp) * 1e6; //timestamp in microsec
+	if(desired_acc > 0.54)
+	{
+		desired_acc = 0.54; //2m/s^2
+	}
+	float64_t current_acc = (dbw_feedback.speed - Prev_velo)/(dbw_feedback.timestamp-dbw_feedback_prev_timestamp) * 1e6; //timestamp in microsec
+	dbw_feedback_prev_timestamp = dbw_feedback.timestamp;
+	float64_t acc_error = desired_acc - current_acc;
+//	brake_pressure = SpeedController(speed_error, acc_error);
+	//
 	//compute cmd steer in percentage
 	float64_t steer_radpersec;
 	steer_radpersec = PID(	1.8, 						//P gain
@@ -293,12 +316,16 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 			-M_PI_2,					//min
 			M_PI_2,						//max
 			desired_curvature,			//Desired angle(rad)
-			0.0,						//current feedback (DBW steer feedback)
+			dbw_feedback.steer,			//current feedback (DBW steer feedback)
 			Prev_Steer,					//prev feedback angle(rad)
 			Steer_Intergral_error);		//Integral error;
 	//publish stkci
+	speed_mpersec = speed_mpersec * (1-pow(brake_pressure,2));
 	std::cout << "VCM - Speed = " << speed_mpersec << std::endl;
 	std::cout << "VCM - Steer = " << steer_radpersec << std::endl;
+
+	Prev_velo = dbw_feedback.speed;
+	Prev_Steer = dbw_feedback.steer;
 
 	PubDBWCmds(speed_mpersec,steer_radpersec);
 
@@ -386,7 +413,7 @@ void VCMProcess::PubDBWCmds(float64_t drive_speed_scale, float64_t steer_scale)
 {
 	Platform::Sensors::PalletDbwCmdMsg out_data_DbwCmdMsg;
 	out_data_DbwCmdMsg.timestamp = Common::Utility::Time::getusecCountSinceEpoch();
-	out_data_DbwCmdMsg.max_speed = config_params_.max_speed;//m/s
+	out_data_DbwCmdMsg.max_speed = brake_pressure;//config_params_.max_speed;//m/s
 	out_data_DbwCmdMsg.max_steer = default_max_steer_radians; //radians
 	out_data_DbwCmdMsg.cmd_speed = drive_speed_scale;
 	out_data_DbwCmdMsg.cmd_steer = steer_scale;
@@ -515,7 +542,7 @@ float64_t VCMProcess::PID(
 	return output;
 }
 
-void VCMProcess::SpeedController(double speed_error, double acc_error)
+double VCMProcess::SpeedController(double speed_error, double acc_error)
 {
 	/*
 	 * Input: 	Speed feedback
@@ -642,7 +669,7 @@ void VCMProcess::SpeedController(double speed_error, double acc_error)
 	std::cout <<"weighted sum = " << weighted_sum <<std::endl;
 	double final_output = (outdata[0] + outdata[1]) / weighted_sum;
 	std::cout << "final output = " << final_output << std::endl;
-
+	return final_output;
 }
 
 
@@ -682,6 +709,27 @@ float VCMProcess::rule_table(std::string spd_error, std::string acc_error)
 		std::cout <<"Unable to Open File" <<std::endl;
 		return 0;
 	}
+}
+
+void VCMProcess::GetUserInput_Thread()
+{
+	char data_in;
+	std::cin >> data_in;
+	std::cout << "Entered key : " << data_in << std::endl;
+
+	if(data_in == '[')
+	{
+		brake_pressure+=0.1;
+		if(brake_pressure >= 1.0)
+			brake_pressure = 1.0;
+	}
+	else if(data_in ==']')
+	{
+		brake_pressure-=0.1;
+		if(brake_pressure <= 0.0)
+			brake_pressure = 0.0;
+	}
+	std::cout << " brake pressure = " << brake_pressure << std::endl;
 }
 
 VCMProcess::~VCMProcess()

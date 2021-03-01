@@ -101,7 +101,8 @@ Common::InitializeStageStatus VCMInitializeController::SetupSpecificServices()
 	//vcm process thread
 	thread_id++;
 	ptr_owner->startThread(ptr_owner->sptr_VCMProcess,thread_id,config_params.main_thread_period,10);
-
+	thread_id++;
+	ptr_owner->startThread(std::bind(&VCMProcess::GetUserInput_Thread,ptr_owner->sptr_VCMProcess.get()),thread_id,config_params.main_thread_period,10);
 	//
 	return ret_status;
 }

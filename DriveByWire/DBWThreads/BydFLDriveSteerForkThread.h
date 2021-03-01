@@ -196,6 +196,8 @@ private:
 	//
 	bool CalibrateBrake();
 	void TorqueBrake(void);
+	void TorqueControl(float64_t torque);
+
 private:
 
 	//

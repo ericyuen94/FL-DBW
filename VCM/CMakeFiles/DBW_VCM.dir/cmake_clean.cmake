@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/DBW_VCM.dir/VCMProcess.cpp.o"
   "CMakeFiles/DBW_VCM.dir/main.cpp.o"
   "CMakeFiles/DBW_VCM.dir/VcmComms/RetreiveVIMStatus.cpp.o"
+  "CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveDBWFeedback.cpp.o"
   "CMakeFiles/DBW_VCM.dir/VcmComms/RetrievePLMStatus.cpp.o"
   "CMakeFiles/DBW_VCM.dir/VcmComms/RetrieveVcmCmd.cpp.o"
   "CMakeFiles/DBW_VCM.dir/__/DBWCommon/FuzzyLogicController/FuzzyController.cpp.o"
