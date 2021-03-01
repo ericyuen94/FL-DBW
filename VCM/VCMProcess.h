@@ -92,7 +92,7 @@ private:
 
 	void GetBoundaryCheckLinearSpeed(float64_t current_speed, float64_t &new_speed);
 
-	void SpeedController();
+	void SpeedController(double speed_error, double acc_error);
 
 	float rule_table(std::string spd_error, std::string acc_error);
 

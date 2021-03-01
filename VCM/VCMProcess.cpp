@@ -165,7 +165,11 @@ void VCMProcess::GetPLMHealthStatus(platform_liveness_status &status)
 
 void VCMProcess::operator()()
 {
-	SpeedController();
+	int64_t current_timestamp_test, end_timestamp_test;
+	current_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
+	SpeedController(0.9,0.1);
+	end_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
+	std::cout << "Time taken for Speed Controller (ms) = " << end_timestamp_test - current_timestamp_test << std::endl;
 	return;
 
 	//
@@ -258,7 +262,7 @@ void VCMProcess::operator()()
 	previous_timestamp =  current_timestamp;
 }
 
-void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t current_curvature)
+void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t desired_curvature)
 {
 	//ensure within max linear speed percentage
 	float64_t speed_mpersec;
@@ -277,7 +281,7 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 	//
 	// GetBoundaryCheckLinearSpeed(desired_speed,speed_mpersec);
 	//Steer is already in angle
-	float64_t converted_steer_angle = atan(current_curvature*1.36); // 1.36 = wheel base of forklift
+	float64_t converted_steer_angle = atan(desired_curvature*1.36); // 1.36 = wheel base of forklift
 	std::cout << "Steering angle = " << converted_steer_angle << std::endl;
 
 	//compute cmd steer in percentage
@@ -288,7 +292,7 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 			0.01, 						//dt
 			-M_PI_2,					//min
 			M_PI_2,						//max
-			current_curvature,			//Desired angle(rad)
+			desired_curvature,			//Desired angle(rad)
 			0.0,						//current feedback (DBW steer feedback)
 			Prev_Steer,					//prev feedback angle(rad)
 			Steer_Intergral_error);		//Integral error;
@@ -511,7 +515,7 @@ float64_t VCMProcess::PID(
 	return output;
 }
 
-void VCMProcess::SpeedController()
+void VCMProcess::SpeedController(double speed_error, double acc_error)
 {
 	/*
 	 * Input: 	Speed feedback
@@ -558,24 +562,20 @@ void VCMProcess::SpeedController()
 
 	std::vector<FuzzyController::FuzzySolution> Spd_output;
 
-	double speed_error = 0.88;
-	int j = 0;
-
 	for (int i = 0; i < 5; i++)
 	{
 		if(FuzzySpdErrorSet[i]->isDotinInterval(speed_error))
 		{
 			std::string n;
 			FuzzySpdErrorSet[i]->GetName(n);
-//			std::cout << "Name of fuzzy set : " << n << std::endl;
-			// do string compare to cross check rule table
 			FuzzyController::FuzzySolution spdout;
 			spdout.SetValue(FuzzySpdErrorSet[i]->GetValue(speed_error));
 			spdout.setName(n);
 			Spd_output.push_back(spdout);
 		}
 	}
-
+	if(Spd_output.size() < 2)
+		Spd_output.push_back(Spd_output.front());
 	//
 
 	FuzzyController::FuzzyFunction *FuzzyAccErrorSet[5];
@@ -607,22 +607,20 @@ void VCMProcess::SpeedController()
 
 	std::vector<FuzzyController::FuzzySolution> Acc_output;
 
-	double acc_error = 0.6;
-	int k = 0;
-
 	for (int i = 0; i < 5; i++)
 	{
 		if(FuzzyAccErrorSet[i]->isDotinInterval(acc_error))
 		{
 			std::string n;
 			FuzzyAccErrorSet[i]->GetName(n);
-			// do string compare to cross check rule table
 			FuzzyController::FuzzySolution accout;
 			accout.SetValue(FuzzyAccErrorSet[i]->GetValue(acc_error));
 			accout.setName(n);
 			Acc_output.push_back(accout);
 		}
 	}
+	if(Acc_output.size() < 2)
+		Acc_output.push_back(Acc_output.front());
 
 	//Check which rule is applicable
 	std::string a, b;
@@ -665,13 +663,13 @@ float VCMProcess::rule_table(std::string spd_error, std::string acc_error)
 				{
 					//return high speed factor
 					std::cout << "HIGH "<< line <<std::endl;
-					return 0.7;
+					return 0.9;
 				}
 				else if(line.compare(32,3,"low")==0)
 				{
 					//return low speed factor
 					std::cout << "LOW " << line <<std::endl;
-					return 0.3;
+					return 0.1;
 				}
 			}
 		}
