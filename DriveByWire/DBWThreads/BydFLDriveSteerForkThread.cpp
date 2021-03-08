@@ -2012,18 +2012,43 @@ void BydFLDriveSteerForkThread::TorqueBrake()
 		sptr_SmartMotorSteer->set_torque_motor_stop();
 	}
 }
-void BydFLDriveSteerForkThread::TorqueControl(float64_t torque)
+void BydFLDriveSteerForkThread::TorqueControl_Thread()
 {
+	//Should i spin another thread for this function to control the brake continuosly?
 	int vel = 0;
-	torque = torque * 6000;
-	sptr_SmartMotorSteer->set_motor_torque();
-	sptr_SmartMotorSteer->set_throttle_motor_torque(torque);
-	sptr_SmartMotorSteer->set_throttle_motor_torque_slope(100000);
-	vel = sptr_SmartMotorSteer->get_motor_velocity();
-	if (fabs(vel) < 100000)
+	double torque = dbw_cmd.max_speed; // brake %
+	int seq = 0;
+	if (Prev_torque  >= torque)
 	{
-		sptr_SmartMotorSteer->set_torque_motor_stop();
+		seq = 1;
 	}
+	sptr_SmartMotorSteer->set_motor_torque();
+
+	if(seq == 0)
+	{
+		// Release brake
+		sptr_SmartMotorSteer->set_throttle_motor_torque(-3000);
+		sptr_SmartMotorSteer->set_throttle_motor_torque_slope(-5000);
+		vel = sptr_SmartMotorSteer->get_motor_velocity();
+		if (fabs(vel) < 100000)
+		{
+			sptr_SmartMotorSteer->set_torque_motor_stop();
+			seq++;
+		}
+	}
+	else if(seq == 1)
+	{
+		// Apply brake
+		torque = torque * 6000;
+		sptr_SmartMotorSteer->set_throttle_motor_torque(static_cast<int>(torque));
+		sptr_SmartMotorSteer->set_throttle_motor_torque_slope(100000);
+		vel = sptr_SmartMotorSteer->get_motor_velocity();
+		if (fabs(vel) < 100000)
+		{
+			sptr_SmartMotorSteer->set_torque_motor_stop();
+		}
+	}
+
 }
 
 float32_t BydFLDriveSteerForkThread::ComputeSteerDeg(int32_t encoder_pos)

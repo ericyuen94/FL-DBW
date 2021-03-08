@@ -98,4 +98,13 @@ double FuzTrapezoid::GetValue(double t)
 		return 0;
 	}
 }
+bool FuzTrapezoid::isDotinInterval(double t)
+{
+	if(left_point < t && t < right_point)
+		return true;
+	else if(t == l_middle || t == r_middle)
+		return true;
+	else
+		return false;
+}
 }

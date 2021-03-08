@@ -19,7 +19,7 @@ public:
 	virtual void setMiddle(double left, double right);
 	virtual void setName(std::string s);
 	virtual double GetValue(double t);
-	bool isDotinInterval(double t);
+	virtual bool isDotinInterval(double t);
 	void GetName(std::string &s);
 };
 
@@ -43,6 +43,8 @@ private:
 public:
 	void setMiddle(double left, double right);
 	double GetValue(double t);
+	bool isDotinInterval(double t);
+
 
 };
 

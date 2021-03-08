@@ -121,7 +121,11 @@ Common::InitializeStageStatus DBWInitializeController::SetupSpecificServices()
 				ptr_owner->sptr_BydFLDriveSteerForkThread.get()),
 				thread_id,
 				50,10);
-
+	thread_id++;
+	ptr_owner->startThread(std::bind(&BydFLDriveSteerForkThread::TorqueControl_Thread,
+				ptr_owner->sptr_BydFLDriveSteerForkThread.get()),
+				thread_id,
+				50,10);
 
 	//	thread_id++;
 	//	ptr_owner->startThread(std::bind(&DriveMotorThread::Thread_CommandBasePallet,

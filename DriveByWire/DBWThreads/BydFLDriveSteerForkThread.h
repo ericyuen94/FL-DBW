@@ -145,6 +145,7 @@ public:
 	void Thread_DecodeBattery();
 	void Thread_DecodeSpeed();
 	void Thread_DecodeSpeedMode();
+	void TorqueControl_Thread();
 
 
 	~BydFLDriveSteerForkThread();
@@ -196,7 +197,6 @@ private:
 	//
 	bool CalibrateBrake();
 	void TorqueBrake(void);
-	void TorqueControl(float64_t torque);
 
 private:
 
@@ -360,6 +360,8 @@ private:
 	float32_t ComputeSteerDeg(int32_t encoder_pos);
 
 	bool bSafetyLidar;
+
+	double Prev_torque;
 };
 
 }//BydFLDriveSteerForkThread

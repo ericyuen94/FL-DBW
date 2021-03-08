@@ -170,7 +170,7 @@ void VCMProcess::operator()()
 {
 //	int64_t current_timestamp_test, end_timestamp_test;
 //	current_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
-//	SpeedController(0.9,0.1);
+//	SpeedController(0.9,1.0);
 //	end_timestamp_test = Common::Utility::Time::getmsCountSinceEpoch();
 //	std::cout << "Time taken for Speed Controller (ms) = " << end_timestamp_test - current_timestamp_test << std::endl;
 //	return;
@@ -217,10 +217,12 @@ void VCMProcess::operator()()
 		if(sptr_RetrieveDBWFeedback_->GetPalletDBWFbkMsg(dbw_feedback))
 		{
 			send_zero_cmds = false;
+			std::cout <<"Recieved Feedback speed = " <<dbw_feedback.speed << std::endl;
 		}
 		else
 		{
 			send_zero_cmds = true;
+			return;
 		}
 		if(sptr_RetrieveVcmCmd_->GetVcmCmd(data_vcm_cmd)) //From PathFollower
 		{
@@ -277,9 +279,10 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 {
 	//ensure within max linear speed percentage
 	float64_t speed_mpersec;
+
 	//Convert speed input from m/s to percent
 	speed_mpersec = PID(	1.0, 						//P gain
-			0.0, 						//I gain
+			0.5, 						//I gain
 			0.0, 						//D gain
 			0.01, 						//dt
 			-0.81,						//min (3km/h) reverse
@@ -290,23 +293,35 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 			Velocity_Intergral_error);	//Integral error
 
 	//
-	// GetBoundaryCheckLinearSpeed(desired_speed,speed_mpersec);
+	float64_t speed_error = dbw_feedback.speed - desired_speed; // m/s
+	std::cout << "desired spd = " << desired_speed << std::endl;
+	std::cout << "spd = " << dbw_feedback.speed << std::endl;
+	float64_t desired_acc = speed_error/((dbw_feedback.timestamp-dbw_feedback_prev_timestamp) / 1e6); //timestamp in microsec
+	float64_t current_acc = (dbw_feedback.speed - Prev_velo)/(dbw_feedback.timestamp-dbw_feedback_prev_timestamp) / 1e6; //timestamp in microsec
+	float64_t acc_error = desired_acc - current_acc;
+	std::cout << "desired acc = " << desired_acc << std::endl;
+	std::cout << "current_acc = " << current_acc << std::endl;
+	if(acc_error > 0.54)
+	{
+		acc_error = 0.54;
+	}
+	speed_error = speed_error / 2.77; //Get percentage
+	acc_error	= acc_error/0.54;
+
+	if(speed_error > 0)
+	{
+		brake_pressure = SpeedController(fabs(speed_error), fabs(acc_error));
+	}
+	else
+	{
+		brake_pressure = 0;
+	}
+	//
+
 	//Steer is already in angle
 	float64_t converted_steer_angle = atan(desired_curvature*1.36); // 1.36 = wheel base of forklift
 	std::cout << "Steering angle = " << converted_steer_angle << std::endl;
-	//
-	float64_t speed_error = dbw_feedback.speed - desired_speed; // m/s
-	speed_error = speed_error / 2.77; //Get percentage
-	float64_t desired_acc = speed_error/(dbw_feedback.timestamp-dbw_feedback_prev_timestamp) * 1e6; //timestamp in microsec
-	if(desired_acc > 0.54)
-	{
-		desired_acc = 0.54; //2m/s^2
-	}
-	float64_t current_acc = (dbw_feedback.speed - Prev_velo)/(dbw_feedback.timestamp-dbw_feedback_prev_timestamp) * 1e6; //timestamp in microsec
-	dbw_feedback_prev_timestamp = dbw_feedback.timestamp;
-	float64_t acc_error = desired_acc - current_acc;
-//	brake_pressure = SpeedController(speed_error, acc_error);
-	//
+
 	//compute cmd steer in percentage
 	float64_t steer_radpersec;
 	steer_radpersec = PID(	1.8, 						//P gain
@@ -316,16 +331,20 @@ void VCMProcess::ComputePathFollowCmdtoDBWCmd(float64_t desired_speed, float64_t
 			-M_PI_2,					//min
 			M_PI_2,						//max
 			desired_curvature,			//Desired angle(rad)
-			dbw_feedback.steer,			//current feedback (DBW steer feedback)
-			Prev_Steer,					//prev feedback angle(rad)
+			0,//dbw_feedback.steer,			//current feedback (DBW steer feedback)
+			0,//Prev_Steer,					//prev feedback angle(rad)
 			Steer_Intergral_error);		//Integral error;
+
+
 	//publish stkci
-	speed_mpersec = speed_mpersec * (1-pow(brake_pressure,2));
+	speed_mpersec = speed_mpersec * (1-pow(brake_pressure,2)); // Let this be the delayed response
 	std::cout << "VCM - Speed = " << speed_mpersec << std::endl;
 	std::cout << "VCM - Steer = " << steer_radpersec << std::endl;
+	std::cout << "VCM - Brake = " << brake_pressure << std::endl;
 
 	Prev_velo = dbw_feedback.speed;
 	Prev_Steer = dbw_feedback.steer;
+	dbw_feedback_prev_timestamp = dbw_feedback.timestamp;
 
 	PubDBWCmds(speed_mpersec,steer_radpersec);
 
@@ -520,7 +539,7 @@ float64_t VCMProcess::PID(
 
 	float64_t output = 0;
 	float64_t steer_error = des - cur;		// Calculate error
-	float32_t Pout = Pgain * steer_error;				// Proportional term
+	float32_t Pout = Pgain * des;				// Proportional term
 	Ierror += steer_error * dt;	// Integral term
 	// if(fabs(Ierror) >= 100.0)
 	// 	Ierror = 100 * (fabs(Ierror)/Ierror);	//Limits integral term
@@ -544,22 +563,8 @@ float64_t VCMProcess::PID(
 
 double VCMProcess::SpeedController(double speed_error, double acc_error)
 {
-	/*
-	 * Input: 	Speed feedback
-	 * 			Desired Speed
-	 * 			Previous speed error
-	 *
-	 * 	speed error = Desired speed - speed feedback
-	 * 	Speed error delta = speed error - Previous speed error
-	 * 	//small change in speed error =
-	 *
-	 * 	Desired acceleration/deceleration = 0.54m/s^2
-	 *
-	 * 	output: Brake torque(0 ~ 1.0)
-	 *
-	 *	brake =
-	 */
 
+	std::cout << " speed error = " << speed_error<< " , acc_error = " << acc_error<< std::endl;
 	FuzzyController::FuzzyFunction *FuzzySpdErrorSet[5];
 
 	FuzzySpdErrorSet[0] = new FuzzyController::FuzTrapezoid;
@@ -588,7 +593,6 @@ double VCMProcess::SpeedController(double speed_error, double acc_error)
 	FuzzySpdErrorSet[4]->setMiddle(0.9,1.0);
 
 	std::vector<FuzzyController::FuzzySolution> Spd_output;
-
 	for (int i = 0; i < 5; i++)
 	{
 		if(FuzzySpdErrorSet[i]->isDotinInterval(speed_error))

@@ -31,7 +31,7 @@ void VCMManager::setupSpecificCSCIResources()
 	sptr_RetrievePLMStatus = std::make_shared<RetrievePLMStatus>("PLM");
 	sptr_RetrieveVcmCmd = std::make_shared<RetrieveVcmCmd>("PathFollower");
 	sptr_RetrieveVcmCmd_NTU = std::make_shared<RetrieveVcmCmd>("NTUTrigger");
-	sptr_RetrieveDBWFeedback = std::make_shared<RetrieveDBWFeedback>("DBW");
+	sptr_RetrieveDBWFeedback = std::make_shared<RetrieveDBWFeedback>("DBWTest");
 
 	sptr_VCMProcess = std::make_shared<VCMProcess>(sptr_RetreiveVIMStatus,sptr_RetrievePLMStatus,sptr_RetrieveVcmCmd,sptr_RetrieveVcmCmd_NTU,sptr_RetrieveDBWFeedback);
 
